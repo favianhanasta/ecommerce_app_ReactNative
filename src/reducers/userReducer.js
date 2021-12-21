@@ -5,6 +5,7 @@ const INITIAL_STATE={
     role:'',
     status:'',
     chart:[],
+    photo:"",
 }
 
 
@@ -15,6 +16,10 @@ export const userReducer = (state=INITIAL_STATE,action)=>{
         case 'REGISTER_SUCCESS':
             return {...state,...action.payload}
         case 'UPDATE_CART_SUCCESS':
+            return {...state,...action.payload}
+        case 'UPDATE_PHOTO':
+            return {...state,photo:action.payload}
+        case 'UPDATE_USER':
             return {...state,...action.payload}
         case 'LOGOUT':
             return INITIAL_STATE

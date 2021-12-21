@@ -54,7 +54,8 @@ export const onRegister = (email,username,pass)=>{
                 password : pass,
                 role:"user",
                 status:"Active",
-                cart:[]
+                cart:[],
+                photo:"https://www.clipartmax.com/png/middle/257-2572603_user-man-social-avatar-profile-icon-man-avatar-in-circle.png",
             })
             dispatch({
                 type:'REGISTER_SUCCESS',
@@ -91,3 +92,42 @@ export const logoutAction = ()=>{
         dispatch({ type: "LOGOUT" })
     }
 }
+
+export const updateUserPhoto = (image,iduser) =>{
+    return async (dispatch) =>{
+        try {
+            let res= await axios.patch(`${API_URL}/dataUser/${iduser}`,{photo:image})
+            dispatch({
+                type:'UPDATE_PHOTO',
+                payload:res.data.photo
+            })
+            return {success:true}
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+}
+
+export const updateUser = (editUsername,editEmail,editPassword,iduser) =>{
+    return async (dispatch) =>{
+        try {
+            let data={
+                username : editUsername,
+                email : editEmail,
+                password : editPassword
+            }
+            let res= await axios.patch(`${API_URL}/dataUser/${iduser}`,data)
+            dispatch({
+                type:'UPDATE_USER',
+                payload:res.data
+            })
+            return {success:true}
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+}
+
+

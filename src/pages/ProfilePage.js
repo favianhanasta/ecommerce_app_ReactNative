@@ -12,7 +12,6 @@ const ProfilePage =(props)=>{
     const dispatch = useDispatch()
 
     useEffect(() => {
-        console.log("data dari reducer :", iduser)
         if (!iduser) {
             props.navigation.reset({
                 index: 0,
@@ -21,13 +20,14 @@ const ProfilePage =(props)=>{
         }
     })
 
-    const {username,email,role,status,iduser} = useSelector((state)=>{
+    const {username,email,role,status,iduser,photo} = useSelector((state)=>{
         return {
             username : state.userReducer.username,
             email : state.userReducer.email,
             role : state.userReducer.role,
             status : state.userReducer.status,
-            iduser : state.userReducer.id
+            iduser : state.userReducer.id,
+            photo : state.userReducer.photo
         }
     })
     
@@ -133,7 +133,7 @@ const ProfilePage =(props)=>{
                 <Avatar
                 rounded
                 size="large"
-                source = {{uri:'https://www.clipartmax.com/png/middle/257-2572603_user-man-social-avatar-profile-icon-man-avatar-in-circle.png'}}
+                source = {{uri:photo}}
                 />
                 <View style={{marginLeft:wp(5)}}> 
                     <Text style={{color:'yellow'}} h4 >{username} <Badge value={status} status='success'/></Text>
@@ -144,6 +144,7 @@ const ProfilePage =(props)=>{
                     type='material-community'
                     name='account-edit'
                     color='white'
+                    onPress={()=>props.navigation.navigate('Account Detail')}
                 />
                 </View>
             <View style ={{paddingHorizontal:wp(3),flexDirection:'row',marginTop:hp(3)}}>

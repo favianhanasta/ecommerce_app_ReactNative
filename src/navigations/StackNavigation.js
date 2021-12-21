@@ -2,7 +2,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { onKeepLogin } from '../actions';
+import Account from '../pages/Account';
 import DetailProduct from '../pages/Detail';
+import DetailTransaction from '../pages/DetailTransaction';
 import HistoryPage from '../pages/History';
 import LoginPage from '../pages/Login';
 import RegisterPage from '../pages/Register';
@@ -25,6 +27,8 @@ const StackNavigation = (props) =>{
             <Stack.Screen name='Register' component={RegisterPage} options={{headerShown:false}}/>
             <Stack.Screen name='Detail' component={DetailProduct} options={{headerShown:false}}/>
             <Stack.Screen name='History' component={HistoryPage} />
+            <Stack.Screen name='Transaction Detail' component={DetailTransaction} />
+            <Stack.Screen name='Account Detail' component={Account} />
         </Stack.Navigator>
     )
 }

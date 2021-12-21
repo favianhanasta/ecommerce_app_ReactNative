@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, Image, ScrollView, StyleSheet, View } from 'react-native';
-import { Badge, Card, Text } from 'react-native-elements';
+import { Alert, Image, ScrollView, StyleSheet, View } from 'react-native';
+import { Badge, Card, Text,Button } from 'react-native-elements';
 import axios from 'axios';
 import { API_URL } from '../helper';
 import { useSelector } from 'react-redux';
@@ -56,18 +56,14 @@ const HistoryPage=(props)=>{
     console.log(data)
     const printHistory = () =>{
         return data.map((val,idx)=>{
+            let badgeColor = val.status.includes('Konfirmasi') ?"warning" : val.status.includes('Batal') ?"error" : "success"
             return(
                 <View key={idx.toString()} style={{borderWidth:0.5,marginBottom:hp(3),borderColor:'#b2bec3',borderRadius:15}}>
                     <View style={{backgroundColor:'#1B1464',padding:10,borderTopLeftRadius:15,borderTopRightRadius:15}}>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                         <Text style={{fontSize:12,fontWeight:'bold',color:'white'}}>{val.invoice}</Text>
-                        <Text style={{fontSize:12,fontWeight:'bold',color:'white'}}>{val.username}</Text>
                         <Badge value={val.status} textStyle={{fontWeight:'bold'}} 
-                            status={
-                                val.status.includes('Konfirmasi') ?
-                                "warning" : val.status.includes('Batal') ?
-                                "error" : "success"
-                            }
+                            status={badgeColor}
                         />
                     </View >
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
@@ -93,10 +89,15 @@ const HistoryPage=(props)=>{
                     </View>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'flex-end',paddingVertical:hp(1)}}>
-                        <Text style={{backgroundColor:'red',padding:5,color:'white',borderRadius:5}}>
-                            Batalkan Pesanan
-                        </Text>
-                        <Text style={{padding:5,color:'#4FA4F3',marginHorizontal:wp(2),borderRadius:5}}>
+                        <Button
+                        title='Batalkan Pesanan'
+                        disabled = {badgeColor=='error'?true : false}
+                        buttonStyle={{padding:3,backgroundColor:'red'}}
+                        titleStyle={{fontSize:12,color:'white'}}
+                        containerStyle={{margin:5}}
+                        
+                        />
+                        <Text style={{padding:5,color:'#4FA4F3',marginHorizontal:wp(2),borderRadius:5}} onPress={()=>props.navigation.navigate('Transaction Detail',{detail:val})}>
                             Lihat Detail Produk
                         </Text>
                     </View>
